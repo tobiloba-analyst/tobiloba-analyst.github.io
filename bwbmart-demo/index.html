@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalSource Africa — Connect Your Business to Verified African Suppliers</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #FFFFFF; color: #1A1A1A; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #E8E8E8;
+    padding: 1rem 6%;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .nav-logo { font-size: 1.25rem; font-weight: 800; color: #1A1A1A; }
+  .nav-logo span { color: #006B6B; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: #555; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: #006B6B; }
+  .nav-cta { background: #006B6B; color: white; border: none; padding: 0.55rem 1.2rem; border-radius: 6px; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .nav-cta:hover { background: #005555; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0D1B2A 0%, #0A3040 50%, #006B6B 100%);
+    color: white;
+    padding: 6rem 6% 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 40%, rgba(0,107,107,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 10% 80%, rgba(0,168,150,0.12) 0%, transparent 50%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0,107,107,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,107,107,0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 680px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(0,107,107,0.3); border: 1px solid rgba(0,168,150,0.4);
+    border-radius: 100px; padding: 0.4rem 1rem;
+    font-size: 0.78rem; font-weight: 600; color: #00D4B8;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    margin-bottom: 1.8rem;
+  }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; background: #00D4B8; border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.4; transform:scale(1.5); } }
+  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 800; line-height: 1.08; letter-spacing: -1.5px; margin-bottom: 1.2rem; }
+  .hero h1 em { color: #00D4B8; font-style: normal; }
+  .hero p { font-size: 1.1rem; opacity: 0.8; line-height: 1.75; max-width: 520px; margin-bottom: 2.5rem; }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-supplier {
+    background: #00A896; color: white; border: none;
+    padding: 0.9rem 2rem; border-radius: 8px;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    transition: all 0.25s; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-supplier:hover { background: #008F7E; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,168,150,0.35); }
+  .btn-buyer {
+    background: transparent; color: white;
+    border: 2px solid rgba(255,255,255,0.35);
+    padding: 0.9rem 2rem; border-radius: 8px;
+    font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: all 0.25s; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-buyer:hover { border-color: white; background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+  .hero-stats { display: flex; gap: 2.5rem; margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,0.12); flex-wrap: wrap; }
+  .stat-item { text-align: left; }
+  .stat-number { font-size: 1.8rem; font-weight: 800; color: #00D4B8; }
+  .stat-label { font-size: 0.78rem; opacity: 0.65; margin-top: 2px; }
+
+  /* HOW IT WORKS */
+  .section { padding: 5rem 6%; }
+  .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #006B6B; margin-bottom: 0.75rem; }
+  .section-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; color: #1A1A1A; line-height: 1.2; letter-spacing: -0.8px; margin-bottom: 1rem; }
+  .section-sub { font-size: 1rem; color: #666; line-height: 1.7; max-width: 520px; margin-bottom: 3rem; }
+  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .step-card { background: #F8FAFA; border: 1px solid #E8E8E8; border-radius: 14px; padding: 1.75rem; transition: all 0.3s; }
+  .step-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,107,107,0.08); border-color: #006B6B; }
+  .step-num { width: 36px; height: 36px; background: #006B6B; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; margin-bottom: 1rem; }
+  .step-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .step-card p { font-size: 0.875rem; color: #666; line-height: 1.65; }
+
+  /* FEATURES */
+  .features-bg { background: #F8FAFA; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+  .feature-card { background: white; border: 1px solid #E8E8E8; border-radius: 14px; padding: 1.75rem; transition: all 0.3s; }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,107,107,0.08); }
+  .feature-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: #1A1A1A; }
+  .feature-card p { font-size: 0.875rem; color: #666; line-height: 1.65; }
+
+  /* TESTIMONIAL */
+  .testimonial-section { background: #0D1B2A; color: white; padding: 5rem 6%; text-align: center; }
+  .testimonial-section .section-label { color: #00D4B8; }
+  .testimonial-section .section-title { color: white; margin: 0 auto 1rem; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .testimonial-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.75rem; text-align: left; }
+  .testimonial-text { font-size: 0.9rem; line-height: 1.7; opacity: 0.85; margin-bottom: 1.2rem; }
+  .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+  .author-avatar { width: 38px; height: 38px; border-radius: 50%; background: #006B6B; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; color: white; }
+  .author-name { font-weight: 600; font-size: 0.875rem; }
+  .author-role { font-size: 0.78rem; opacity: 0.6; }
+
+  /* BOTTOM CTA */
+  .bottom-cta { background: linear-gradient(135deg, #006B6B, #00A896); color: white; padding: 5rem 6%; text-align: center; }
+  .bottom-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 1rem; letter-spacing: -0.8px; }
+  .bottom-cta p { opacity: 0.85; font-size: 1.05rem; margin-bottom: 2.5rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+  .bottom-cta .hero-ctas { justify-content: center; }
+  .bottom-cta .btn-supplier { background: white; color: #006B6B; }
+  .bottom-cta .btn-supplier:hover { background: #F0FAFA; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+  .bottom-cta .btn-buyer { border-color: rgba(255,255,255,0.5); }
+
+  /* FOOTER */
+  footer { background: #0D1B2A; color: rgba(255,255,255,0.4); text-align: center; padding: 2rem 6%; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.06); }
+  footer span { color: #00D4B8; }
+
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: white; border-radius: 16px; padding: 2.5rem; max-width: 440px; width: 90%; text-align: center; }
+  .modal-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .modal h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; color: #1A1A1A; }
+  .modal p { font-size: 0.9rem; color: #666; line-height: 1.6; margin-bottom: 1.5rem; }
+  .modal-close { background: #006B6B; color: white; border: none; padding: 0.75rem 2rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero-stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Global<span>Source</span> Africa</div>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#testimonials">Stories</a></li>
+  </ul>
+  <button class="nav-cta" onclick="trackEvent('Become Supplier Clicked', 'nav_bar')">Get Started</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Now Live Across 12 African Markets</div>
+    <h1>Connect Your Business to <em>Verified African</em> Suppliers</h1>
+    <p>Discover trusted suppliers, manufacturers, and wholesale opportunities across Africa through one marketplace. Source smarter. Grow faster.</p>
+    <div class="hero-ctas">
+      <button class="btn-supplier" id="hero-supplier-btn" onclick="trackEvent('Become Supplier Clicked', 'hero_section')">
+        🏭 Become a Supplier
+      </button>
+      <button class="btn-buyer" id="hero-buyer-btn" onclick="trackEvent('Find Products Clicked', 'hero_section')">
+        🛒 Find Wholesale Products
+      </button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number">4,800+</div>
+        <div class="stat-label">Verified Suppliers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">12</div>
+        <div class="stat-label">African Countries</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">98%</div>
+        <div class="stat-label">Satisfaction Rate</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">$2.4M+</div>
+        <div class="stat-label">Trade Facilitated</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">Simple. Fast. Reliable.</h2>
+  <p class="section-sub">Whether you are a supplier looking to expand or a buyer looking to source, GlobalSource Africa connects you in three steps.</p>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>Create Your Profile</h3>
+      <p>Sign up and build your supplier or buyer profile. Verification takes less than 24 hours.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>Browse or List</h3>
+      <p>Suppliers list their products and capacity. Buyers search verified catalogues across categories.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h3>Connect and Trade</h3>
+      <p>Message directly, request quotes, and close deals with full transaction visibility.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <h3>Grow Your Network</h3>
+      <p>Build long-term relationships with verified trading partners across the continent.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section features-bg" id="features">
+  <div class="section-label">Platform Features</div>
+  <h2 class="section-title">Built for African Trade</h2>
+  <p class="section-sub">Everything you need to source, sell, and scale across African markets.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">✅</div>
+      <h3>Verified Suppliers Only</h3>
+      <p>Every supplier on our platform goes through a rigorous verification process before they can list products.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌍</div>
+      <h3>Pan-African Coverage</h3>
+      <p>Source from Nigeria, Ghana, Kenya, South Africa, Egypt, and 7 more African markets in one place.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💬</div>
+      <h3>Direct Messaging</h3>
+      <p>Communicate directly with suppliers or buyers without leaving the platform. No middlemen.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📦</div>
+      <h3>Bulk Order Management</h3>
+      <p>Manage large wholesale orders, track shipments, and handle documentation all in one dashboard.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Trade Analytics</h3>
+      <p>Track your sourcing performance, supplier reliability scores, and order history with clear reports.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Secure Transactions</h3>
+      <p>Escrow-backed payments protect both buyers and suppliers until delivery is confirmed.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonial-section" id="testimonials">
+  <div class="section-label">Success Stories</div>
+  <h2 class="section-title">Trusted by Businesses Across Africa</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <p class="testimonial-text">"We sourced our entire Q3 inventory through GlobalSource Africa. The supplier verification gave us confidence we had never experienced on other platforms."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">AO</div>
+        <div>
+          <div class="author-name">Adaeze Okonkwo</div>
+          <div class="author-role">Procurement Manager, Lagos</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">"As a manufacturer in Accra, reaching buyers across West Africa used to take months. On GlobalSource it took three days to close our first deal outside Ghana."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">KA</div>
+        <div>
+          <div class="author-name">Kwame Asante</div>
+          <div class="author-role">Factory Owner, Accra</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">"The analytics dashboard helps me track which product categories are moving fastest. I have made better buying decisions in 3 months than in 3 years before."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">FM</div>
+        <div>
+          <div class="author-name">Fatima Musa</div>
+          <div class="author-role">Wholesale Buyer, Kano</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <h2>Ready to Trade Across Africa?</h2>
+  <p>Join thousands of verified suppliers and buyers already growing their businesses on GlobalSource Africa.</p>
+  <div class="hero-ctas">
+    <button class="btn-supplier" onclick="trackEvent('Become Supplier Clicked', 'bottom_cta')">
+      🏭 Become a Supplier
+    </button>
+    <button class="btn-buyer" onclick="trackEvent('Find Products Clicked', 'bottom_cta')">
+      🛒 Find Wholesale Products
+    </button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>GlobalSource Africa</span>. Connecting African Trade. Built for BWBMart Technical Assessment by Tobiloba Oluwakayode.</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-icon" id="modal-icon">🏭</div>
+    <h3 id="modal-title">Thank you for your interest!</h3>
+    <p id="modal-body">Your request has been received. Our team will be in touch within 24 hours.</p>
+    <button class="modal-close" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<!-- AMPLITUDE SDK -->
+<script src="https://cdn.amplitude.com/libs/analytics-browser-2.3.5-min.js.gz"></script>
+<script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.6.22-min.js.gz"></script>
+
+<script>
+  // Initialize Amplitude
+  window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
+  window.amplitude.init('97dc528d2cc0b87c59638007d19cd232', {
+    autocapture: { elementInteractions: true }
+  });
+
+  // Track page view on load
+  window.amplitude.track('Landing Page Viewed', {
+    page_title: 'GlobalSource Africa',
+    page_url: window.location.href,
+    referrer: document.referrer || 'direct',
+    timestamp: new Date().toISOString()
+  });
+
+  // Track CTA events
+  function trackEvent(eventName, location) {
+    const properties = {
+      button_type: eventName === 'Become Supplier Clicked' ? 'supplier' : 'buyer',
+      location: location,
+      page_url: window.location.href,
+      timestamp: new Date().toISOString()
+    };
+
+    window.amplitude.track(eventName, properties);
+    console.log('Amplitude event tracked:', eventName, properties);
+
+    // Show modal
+    if (eventName === 'Become Supplier Clicked') {
+      document.getElementById('modal-icon').textContent = '🏭';
+      document.getElementById('modal-title').textContent = 'Welcome, Supplier!';
+      document.getElementById('modal-body').textContent = 'Thank you for your interest in becoming a verified supplier on GlobalSource Africa. Our onboarding team will reach out within 24 hours.';
+    } else {
+      document.getElementById('modal-icon').textContent = '🛒';
+      document.getElementById('modal-title').textContent = 'Great choice!';
+      document.getElementById('modal-body').textContent = 'You are one step closer to sourcing quality products from verified African suppliers. Our team will guide you through the catalogue.';
+    }
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+
+  // Close modal on background click
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+
+</body>
+        </html>
